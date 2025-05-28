@@ -1,5 +1,28 @@
 .App {
-  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  margin-top: 80px; /* Height of the navbar */
+  padding-top: 20px;
+  min-height: calc(100vh - 80px);
+  background-color: #f8f9fa;
+}
+
+/* Toast container positioning */
+.Toastify__toast-container {
+  margin-top: 80px !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-content {
+    margin-top: 70px;
+    padding-top: 15px;
+  }
 }
 
 .App-logo {
