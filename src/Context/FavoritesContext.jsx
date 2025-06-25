@@ -4,12 +4,21 @@ const FavoritesContext = createContext();
 
 export const FavoritesProvider = ({ children }) => {
     const [favorites, setFavorites] = useState(() => {
-        const savedFavs = localStorage.getItem('favorites');
-        return savedFavs ? JSON.parse(savedFavs) : [];
+        try {
+            const savedFavs = localStorage.getItem('favorites');
+            return savedFavs ? JSON.parse(savedFavs) : [];
+        } catch (e) {
+            console.error('Failed to load favorites from localStorage:', e);
+            return [];
+        }
     });
 
     useEffect(() => {
-        localStorage.setItem('favorites', JSON.stringify(favorites));
+        try {
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+        } catch (e) {
+            console.error('Failed to save favorites to localStorage:', e);
+        }
     }, [favorites]);
 
     const toggleFavorite = (product) => {

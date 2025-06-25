@@ -4,12 +4,22 @@ const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState(() => {
-        const savedCart = localStorage.getItem('cart');
-        return savedCart ? JSON.parse(savedCart) : [];
+        try {
+            const savedCart = localStorage.getItem('cart');
+            return savedCart ? JSON.parse(savedCart) : [];
+        } catch (e) {
+            console.error('Failed to load cart from localStorage:', e);
+            return [];
+        }
     });
 
     useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cart));
+        try {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        } catch (e) {
+            console.error('Failed to save cart to localStorage:', e);
+            // Optionally, show a toast or alert to the user
+        }
     }, [cart]);
 
     const addToCart = (product) => {
