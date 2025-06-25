@@ -16,6 +16,7 @@ const View = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedImage, setSelectedImage] = useState(0);
+    const [showAlert, setShowAlert] = useState(false);
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -49,6 +50,8 @@ const View = () => {
                 quantity: quantity
             };
             addToCart(productToAdd, quantity);
+            setShowAlert(true);
+            setTimeout(() => setShowAlert(false), 2000);
         }
     };
 
@@ -81,6 +84,11 @@ const View = () => {
 
     return (
         <div className="view-container">
+            {showAlert && (
+                <div className="alert-top">
+                    <span>🛒 Added to cart! Check your cart for details.</span>
+                </div>
+            )}
             <button onClick={() => navigate(-1)} className="back-button">
                 <FaArrowLeft /> Back
             </button>
